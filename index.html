@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="theme-color" content="#0a0602" />
+<meta name="description" content="A tiny birthday room made for Jiya, by Pankaj." />
+<title>Happy Birthday, Jiya 🎂</title>
+
+<!--
+  ═══════════════════════════════════════════════════════════════
+  HANDWRITING FONT — used ONLY inside the letter modal
+  ═══════════════════════════════════════════════════════════════
+  • Caveat is warm, personal, Indian-friendly cursive.
+  • We load it here but the rest of the site uses Georgia.
+  • If offline, the fallback stack keeps the letter readable.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&display=swap"
+  rel="stylesheet"
+/>
+
+<link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+<!--
+  ═══════════════════════════════════════════════════════════════
+  ①  INTRO SCREEN
+  ═══════════════════════════════════════════════════════════════
+  Pure black. Nothing visible except a physical white switch.
+  No hint text. No logo. No loading spinner. Just the switch.
+  The switch is a real <button> for keyboard accessibility.
+-->
+<div
+  id="intro-screen"
+  class="intro-screen"
+  role="region"
+  aria-label="Turn on the light to enter the birthday room"
+>
+
+  <button
+    id="light-switch"
+    class="light-switch"
+    type="button"
+    aria-label="Turn on the room light"
+    aria-pressed="false"
+  >
+    <!--
+      The switch is a three-layer object:
+        1. .switch-plate  → the white plastic wall plate
+        2. .switch-rocker → the small toggle that physically rocks
+        3. .switch-glow   → a hidden warm halo that appears on click
+    -->
+    <span class="switch-plate" aria-hidden="true">
+      <span class="switch-screw switch-screw-top"></span>
+      <span class="switch-screw switch-screw-bottom"></span>
+      <span class="switch-rocker"></span>
+    </span>
+    <span class="switch-glow" aria-hidden="true"></span>
+  </button>
+
+</div>
+
+
+<!--
+  ═══════════════════════════════════════════════════════════════
+  ②  THE ROOM
+  ═══════════════════════════════════════════════════════════════
+  Everything below is inside a single <main>. One scene only.
+  aria-hidden="true" initially — becomes "false" when room lights up.
+-->
+<main id="room" class="room" aria-hidden="true">
+
+  <!--
+    ┌───────────────────────────────────────────────────────────┐
+    │ ② .1  AMBIENT LIGHTING LAYERS                             │
+    │ These sit above the wall but below the objects.           │
+    │ They create the "cinematic" layered lighting feel.        │
+    └───────────────────────────────────────────────────────────┘
+  -->
+
+  <!-- ② .1.a — CEILING HOTSPOT
+       A warm oval on the upper wall, showing where the light
+       source actually is. Fades in last during reveal. -->
+  <div class="ceiling-hotspot" aria-hidden="true"></div>
+
+  <!-- ② .1.b — ROOM VIGNETTE
+       Darkens the four corners subtly. This single layer is
+       what makes the room feel like a room and not a poster. -->
+  <div class="room-vignette" aria-hidden="true"></div>
+
+  <!-- ② .1.c — GENERAL WARM BLOOM
+       The overall warm haze that sits over everything. -->
+  <div class="room-bloom" aria-hidden="true"></div>
+
+
+  <!--
+    ┌───────────────────────────────────────────────────────────┐
+    │ ② .2  THE WALL                                            │
+    └───────────────────────────────────────────────────────────┘
+  -->
+  <div class="wall" aria-hidden="true">
+
+    <!-- ② .2.a — CEILING TRIM
+         Thin shadow line at the very top of the wall, where
+         the wall meets the ceiling. -->
+    <div class="ceiling-trim"></div>
+
+    <!--
+      ─────────────────────────────────────────────────────────
+      ② .2.b — WINDOW WITH CURTAINS
+      ─────────────────────────────────────────────────────────
+      Nighttime outside. A faint moon glow. Two drawn curtains
+      on either side. Cross-bars on the glass.
+    -->
+    <div class="window">
+      <div class="window-glass"></div>
+      <div class="window-moon"></div>
+      <div class="window-crossbar window-crossbar-v"></div>
+      <div class="window-crossbar window-crossbar-h"></div>
+      <div class="window-sill"></div>
+      <div class="curtain curtain-left"></div>
+      <div class="curtain curtain-right"></div>
+      <div class="curtain-rod"></div>
+      <div class="curtain-rod-finial curtain-rod-finial-left"></div>
+      <div class="curtain-rod-finial curtain-rod-finial-right"></div>
+    </div>
+
+    <!--
+      ─────────────────────────────────────────────────────────
+      ② .2.c — FAIRY LIGHT STRING
+      ─────────────────────────────────────────────────────────
+      Twelve tiny warm bulbs sagging on a curved wire across
+      the upper wall. Each bulb fades in at a slight delay
+      after the room lights up.
+    -->
+    <div class="fairy-lights">
+      <div class="fairy-wire"></div>
+      <span class="fairy-bulb" data-index="0"></span>
+      <span class="fairy-bulb" data-index="1"></span>
+      <span class="fairy-bulb" data-index="2"></span>
+      <span class="fairy-bulb" data-index="3"></span>
+      <span class="fairy-bulb" data-index="4"></span>
+      <span class="fairy-bulb" data-index="5"></span>
+      <span class="fairy-bulb" data-index="6"></span>
+      <span class="fairy-bulb" data-index="7"></span>
+      <span class="fairy-bulb" data-index="8"></span>
+      <span class="fairy-bulb" data-index="9"></span>
+      <span class="fairy-bulb" data-index="10"></span>
+      <span class="fairy-bulb" data-index="11"></span>
+    </div>
+
+    <!--
+      ─────────────────────────────────────────────────────────
+      ② .2.d — PAPER CONFETTI DOTS
+      ─────────────────────────────────────────────────────────
+      Ten tiny static pastel dots scattered on the wall.
+      They do not move. They do not glow. They are just paper.
+    -->
+    <div class="confetti-dots">
+      <span class="dot dot-pink"></span>
+      <span class="dot dot-lavender"></span>
+      <span class="dot dot-gold"></span>
+      <span class="dot dot-blush"></span>
+      <span class="dot dot-pink"></span>
+      <span class="dot dot-lavender"></span>
+      <span class="dot dot-gold"></span>
+      <span class="dot dot-blush"></span>
+      <span class="dot dot-pink"></span>
+      <span class="dot dot-lavender"></span>
+    </div>
+
+    <!--
+      ─────────────────────────────────────────────────────────
+      ② .2.e — JIYA BULB SIGN  (hero element)
+      ─────────────────────────────────────────────────────────
+      Four marquee letters. Each letter has:
+        • the glyph itself
+        • a tiny bulb cap above it
+        • a warm halo ring that expands on light-up
+        • a subtle idle flicker for the first ~2 seconds
+      Letters light up in sequence: J → I → Y → A
+      (script.js handles the .lit class timing)
+    -->
+    <div
+      id="jiya-sign"
+      class="jiya-sign"
+      role="img"
+      aria-label="Jiya"
+    >
+      <!-- shared wire behind all bulbs -->
+      <div class="jiya-wire" aria-hidden="true"></div>
+
+      <!-- letter J -->
+      <span class="bulb-letter" data-letter="J" data-index="0">
+        <span class="bulb-cap" aria-hidden="true"></span>
+        <span class="bulb-halo" aria-hidden="true"></span>
+        <span class="bulb-glyph" aria-hidden="true">J</span>
+      </span>
+
+      <!-- letter I -->
+      <span class="bulb-letter" data-letter="I" data-index="1">
+        <span class="bulb-cap" aria-hidden="true"></span>
+        <span class="bulb-halo" aria-hidden="true"></span>
+        <span class="bulb-glyph" aria-hidden="true">I</span>
+      </span>
+
+      <!-- letter Y -->
+      <span class="bulb-letter" data-letter="Y" data-index="2">
+        <span class="bulb-cap" aria-hidden="true"></span>
+        <span class="bulb-halo" aria-hidden="true"></span>
+        <span class="bulb-glyph" aria-hidden="true">Y</span>
+      </span>
+
+      <!-- letter A -->
+      <span class="bulb-letter" data-letter="A" data-index="3">
+        <span class="bulb-cap" aria-hidden="true"></span>
+        <span class="bulb-halo" aria-hidden="true"></span>
+        <span class="bulb-glyph" aria-hidden="true">A</span>
+      </span>
+    </div>
+
+    <!--
+      ─────────────────────────────────────────────────────────
+      ② .2.f — PHOTO FRAMES  (2, wooden)
+      ─────────────────────────────────────────────────────────
+      Placeholders only. To add real photos, replace:
+        <span class="photo-placeholder">PHOTO_1</span>
+      with:
+        <img src="your-photo.jpg" alt="Jiya" />
+      Nothing else needs changing.
+    -->
+    <figure class="photo-frame photo-frame-left" aria-label="Photo of Jiya">
+      <div class="photo-slot" id="photo-1">
+        <span class="photo-placeholder">PHOTO_1</span>
+      </div>
+      <div class="photo-frame-shadow" aria-hidden="true"></div>
+    </figure>
+
+    <figure class="photo-frame photo-frame-right" aria-label="Photo of Jiya">
+      <div class="photo-slot" id="photo-2">
+        <span class="photo-placeholder">PHOTO_2</span>
+      </div>
+      <div class="photo-frame-shadow" aria-hidden="true"></div>
+    </figure>
+
+    <!--
+      ─────────────────────────────────────────────────────────
+      ② .2.g — PERSONAL FRAMED NOTE  (the "P" detail)
+      ─────────────────────────────────────────────────────────
+      A tiny pinned note on the wall, low-key, not clickable.
+      Only visible to someone who looks carefully.
+    -->
+    <div class="personal-note" aria-hidden="true">
+      <span class="personal-note-pin"></span>
+      <span class="personal-note-text">
+        Made for Jiya,<br />with a lot of care.<br />— P
+      </span>
+    </div>
+
+  </div><!-- /.wall -->
+
+
+  <!--
+    ┌───────────────────────────────────────────────────────────┐
+    │ ② .3  THE FLOOR                                           │
+    └───────────────────────────────────────────────────────────┘
+    Wood planks with a soft oval rug in the center.
+    Under the table there is a contact shadow so the table
+    does not look like it is floating.
+  -->
+  <div class="floor" aria-hidden="true">
+
+    <!-- individual floorboards -->
+    <div class="floor-planks">
+      <span class="plank"></span>
+      <span class="plank"></span>
+      <span class="plank"></span>
+      <span class="plank"></span>
+      <span class="plank"></span>
+      <span class="plank"></span>
+      <span class="plank"></span>
+      <span class="plank"></span>
+    </div>
+
+    <!-- soft oval rug -->
+    <div class="rug">
+      <div class="rug-inner-border"></div>
+      <div class="rug-shine"></div>
+    </div>
+
+    <!-- table contact shadow — makes table feel grounded -->
+    <div class="table-contact-shadow" aria-hidden="true"></div>
+
+    <!-- floor ambient shadow at the wall base -->
+    <div class="floor-base-shadow"></div>
+
+  </div>
+
+
+  <!--
+    ┌───────────────────────────────────────────────────────────┐
+    │ ② .4  CORNER — SIDE LAMP + PLANT                          │
+    └───────────────────────────────────────────────────────────┘
+    Left corner. A small side lamp with a warm shade and a
+    tiny potted plant. The lamp's glow falls onto the floor.
+  -->
+  <div class="corner corner-left" aria-hidden="true">
+
+    <div class="side-lamp">
+      <div class="lamp-shade">
+        <span class="lamp-shade-seam"></span>
+      </div>
+      <div class="lamp-bulb-glow"></div>
+      <div class="lamp-floor-glow"></div>
+      <div class="lamp-pole"></div>
+      <div class="lamp-base"></div>
+    </div>
+
+    <div class="plant">
+      <span class="plant-leaf plant-leaf-1"></span>
+      <span class="plant-leaf plant-leaf-2"></span>
+      <span class="plant-leaf plant-leaf-3"></span>
+      <span class="plant-leaf plant-leaf-4"></span>
+      <span class="plant-leaf plant-leaf-5"></span>
+      <span class="plant-stem"></span>
+      <span class="plant-pot">
+        <span class="plant-pot-rim"></span>
+      </span>
+    </div>
+
+  </div>
+
+
+  <!--
+    ┌───────────────────────────────────────────────────────────┐
+    │ ② .5  THE TABLE  (center focal point)                     │
+    └───────────────────────────────────────────────────────────┘
+    Simple wooden table. Top surface, four legs, warm glow
+    hovering just above it, and a soft cake pool of light.
+  -->
+  <section class="table-area" aria-label="Birthday table">
+
+    <div class="table">
+
+      <!-- warm glow hovering above the table -->
+      <div class="table-glow" aria-hidden="true"></div>
+
+      <!-- an extra tight pool of light right around the cake -->
+      <div class="cake-pool" aria-hidden="true"></div>
+
+      <!-- tabletop -->
+      <div class="table-top">
+        <div class="table-edge-front" aria-hidden="true"></div>
+        <div class="table-surface">
+
+          <!--
+            ─────────────────────────────────────────────────
+            ② .5.a — LETTER  (envelope with paper poking out)
+            ─────────────────────────────────────────────────
+            Real <button>. On click, script.js opens modal.
+          -->
+          <button
+            id="letter"
+            class="letter"
+            type="button"
+            aria-label="Open the letter from Pankaj"
+          >
+            <span class="letter-shadow" aria-hidden="true"></span>
+            <span class="letter-envelope" aria-hidden="true">
+              <span class="letter-paper-edge">
+                <span class="letter-paper-line letter-paper-line-1"></span>
+                <span class="letter-paper-line letter-paper-line-2"></span>
+                <span class="letter-paper-line letter-paper-line-3"></span>
+              </span>
+              <span class="letter-back"></span>
+              <span class="letter-flap"></span>
+              <span class="letter-flap-fold"></span>
+              <span class="letter-seal">
+                <span class="letter-seal-heart">♥</span>
+              </span>
+            </span>
+          </button>
+
+          <!--
+            ─────────────────────────────────────────────────
+            ② .5.b — CAKE  (one tier, cream, cherries, 3 candles)
+            ─────────────────────────────────────────────────
+            • 3 candles, each with wick + flame + smoke
+            • 4 cherries
+            • cream frosting with scalloped drips
+            • body with a soft cream stripe
+            • white plate
+            On click, script.js adds .blown which triggers
+            the flame-out animation.
+          -->
+          <button
+            id="cake"
+            class="cake"
+            type="button"
+            aria-label="Blow out the candles on the cake"
+          >
+            <span class="cake-shadow" aria-hidden="true"></span>
+
+            <!-- candles (3) -->
+            <span class="candles" aria-hidden="true">
+              <span class="candle candle-1">
+                <span class="wick"></span>
+                <span class="flame">
+                  <span class="flame-inner"></span>
+                  <span class="flame-glow"></span>
+                </span>
+                <span class="smoke">
+                  <span class="smoke-puff smoke-puff-1"></span>
+                  <span class="smoke-puff smoke-puff-2"></span>
+                  <span class="smoke-puff smoke-puff-3"></span>
+                </span>
+              </span>
+              <span class="candle candle-2">
+                <span class="wick"></span>
+                <span class="flame">
+                  <span class="flame-inner"></span>
+                  <span class="flame-glow"></span>
+                </span>
+                <span class="smoke">
+                  <span class="smoke-puff smoke-puff-1"></span>
+                  <span class="smoke-puff smoke-puff-2"></span>
+                  <span class="smoke-puff smoke-puff-3"></span>
+                </span>
+              </span>
+              <span class="candle candle-3">
+                <span class="wick"></span>
+                <span class="flame">
+                  <span class="flame-inner"></span>
+                  <span class="flame-glow"></span>
+                </span>
+                <span class="smoke">
+                  <span class="smoke-puff smoke-puff-1"></span>
+                  <span class="smoke-puff smoke-puff-2"></span>
+                  <span class="smoke-puff smoke-puff-3"></span>
+                </span>
+              </span>
+            </span>
+
+            <!-- cherries -->
+            <span class="cake-cherries" aria-hidden="true">
+              <span class="cherry cherry-1"></span>
+              <span class="cherry cherry-2"></span>
+              <span class="cherry cherry-3"></span>
+              <span class="cherry cherry-4"></span>
+            </span>
+
+            <!-- frosting + drips -->
+            <span class="cake-frosting" aria-hidden="true">
+              <span class="cake-drip cake-drip-1"></span>
+              <span class="cake-drip cake-drip-2"></span>
+              <span class="cake-drip cake-drip-3"></span>
+              <span class="cake-drip cake-drip-4"></span>
+            </span>
+
+            <!-- body -->
+            <span class="cake-body" aria-hidden="true">
+              <span class="cake-body-stripe"></span>
+            </span>
+
+            <!-- plate -->
+            <span class="cake-plate" aria-hidden="true">
+              <span class="cake-plate-shine"></span>
+            </span>
+
+            <!-- "puff of air" that appears just before the blow -->
+            <span class="blow-puff" aria-hidden="true"></span>
+          </button>
+
+          <!--
+            ─────────────────────────────────────────────────
+            ② .5.c — GIFT BOX 1 (small, pink)
+            ─────────────────────────────────────────────────
+            On click: shakes → lid pops → golden spark → Birthday Bomb
+          -->
+          <button
+            id="gift-1"
+            class="gift gift-small"
+            type="button"
+            aria-label="Open the small gift box"
+          >
+            <span class="gift-shadow" aria-hidden="true"></span>
+            <span class="gift-spark" aria-hidden="true"></span>
+            <span class="gift-box" aria-hidden="true"></span>
+            <span class="gift-lid" aria-hidden="true"></span>
+            <span class="gift-ribbon-v" aria-hidden="true"></span>
+            <span class="gift-ribbon-h" aria-hidden="true"></span>
+            <span class="gift-bow" aria-hidden="true">
+              <span class="gift-bow-loop gift-bow-loop-left"></span>
+              <span class="gift-bow-loop gift-bow-loop-right"></span>
+              <span class="gift-bow-knot"></span>
+            </span>
+            <span class="gift-burst-ring" aria-hidden="true"></span>
+          </button>
+
+          <!--
+            ─────────────────────────────────────────────────
+            ② .5.d — GIFT BOX 2 (large, lavender)
+            ─────────────────────────────────────────────────
+            Same behavior as gift 1, larger size.
+          -->
+          <button
+            id="gift-2"
+            class="gift gift-large"
+            type="button"
+            aria-label="Open the large gift box"
+          >
+            <span class="gift-shadow" aria-hidden="true"></span>
+            <span class="gift-spark" aria-hidden="true"></span>
+            <span class="gift-box" aria-hidden="true"></span>
+            <span class="gift-lid" aria-hidden="true"></span>
+            <span class="gift-ribbon-v" aria-hidden="true"></span>
+            <span class="gift-ribbon-h" aria-hidden="true"></span>
+            <span class="gift-bow" aria-hidden="true">
+              <span class="gift-bow-loop gift-bow-loop-left"></span>
+              <span class="gift-bow-loop gift-bow-loop-right"></span>
+              <span class="gift-bow-knot"></span>
+            </span>
+            <span class="gift-burst-ring" aria-hidden="true"></span>
+          </button>
+
+          <!--
+            ─────────────────────────────────────────────────
+            ② .5.e — TINY FLOWER VASE
+            ─────────────────────────────────────────────────
+            Decorative only. Not clickable.
+          -->
+          <div class="vase" aria-hidden="true">
+            <span class="vase-flower vase-flower-1"></span>
+            <span class="vase-flower vase-flower-2"></span>
+            <span class="vase-flower vase-flower-3"></span>
+            <span class="vase-stem"></span>
+            <span class="vase-body"></span>
+            <span class="vase-shadow"></span>
+          </div>
+
+        </div><!-- /.table-surface -->
+      </div><!-- /.table-top -->
+
+      <!-- legs -->
+      <div class="table-legs" aria-hidden="true">
+        <span class="table-leg table-leg-back-left"></span>
+        <span class="table-leg table-leg-back-right"></span>
+        <span class="table-leg table-leg-front-left"></span>
+        <span class="table-leg table-leg-front-right"></span>
+      </div>
+
+    </div><!-- /.table -->
+
+  </section>
+
+</main><!-- /#room -->
+
+
+<!--
+  ═══════════════════════════════════════════════════════════════
+  ③  BALLOON LAYER
+  ═══════════════════════════════════════════════════════════════
+  Empty container. script.js spawns balloons here when candles
+  are blown out. Each balloon gets its own drift/tilt/speed.
+  Layer is fixed and overflow-hidden so balloons can travel
+  all the way off the top without affecting layout.
+-->
+<div
+  id="balloon-layer"
+  class="balloon-layer"
+  aria-hidden="true"
+></div>
+
+
+<!--
+  ═══════════════════════════════════════════════════════════════
+  ④  LETTER MODAL
+  ═══════════════════════════════════════════════════════════════
+  • Uses <dialog> semantics via role="dialog" + aria-modal
+  • Hidden by default, script.js removes the [hidden] attr
+  • Handwriting font (Caveat) is applied ONLY here
+  • Slight 0.4deg rotation so the paper doesn't look printed
+  • Hand-drawn wavy underline under Pankaj's signature
+-->
+<div
+  id="letter-modal"
+  class="letter-modal"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="letter-title"
+  hidden
+>
+
+  <div class="letter-paper-open">
+
+    <!-- top-right folded corner detail -->
+    <span class="letter-corner-fold" aria-hidden="true"></span>
+
+    <!-- close -->
+    <button
+      id="letter-close"
+      class="letter-close"
+      type="button"
+      aria-label="Close the letter"
+    >×</button>
+
+    <h2 id="letter-title" class="letter-heading">For Jiya</h2>
+
+    <div class="letter-body">
+      <p class="letter-salutation">Jiya,</p>
+
+      <p>
+        Shayad tumhe kabhi realise nahi hua hoga, par tumhari
+        simple si presence mere liye bahut important rahi hai.
+      </p>
+
+      <p>
+        Ek time tha jab main kisi cheez se zyada umeed nahi rakhta tha.
+        Tumse baat karke lagta tha ki din thoda halka ho gaya.
+        Tumne kabhi kuch solve nahi kiya — tum bas wahan thi,
+        aur wahi kaafi tha.
+      </p>
+
+      <p>
+        Aaj tumhara din hai, toh main bas itna chahta hoon ki tumhe
+        bhi zindagi mein utni hi warmth mile, jitni tum unknowingly
+        dusron ki life mein le aati ho.
+      </p>
+
+      <p class="letter-wish">Happy Birthday, Jiya.</p>
+      <p class="letter-stay">Stay exactly the way you are.</p>
+
+      <p class="letter-sign">
+        — Pankaj ❤️
+        <span class="letter-sign-underline" aria-hidden="true"></span>
+      </p>
+    </div>
+
+  </div>
+</div>
+
+
+<!--
+  ═══════════════════════════════════════════════════════════════
+  ⑤  BIRTHDAY BOMB OVERLAY
+  ═══════════════════════════════════════════════════════════════
+  Appears after opening a gift. Playful, not violent.
+  Three lines of text pop in sequence + falling confetti.
+-->
+<div
+  id="bomb-overlay"
+  class="bomb-overlay"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="bomb-title"
+  hidden
+>
+
+  <div id="bomb-confetti" class="bomb-confetti" aria-hidden="true"></div>
+
+  <div class="bomb-text">
+    <span class="bomb-line bomb-line-1">BIRTHDAY BOMB</span>
+    <span class="bomb-line bomb-line-2">FOR</span>
+    <span class="bomb-line bomb-line-3" id="bomb-title">JIYA</span>
+    <span class="bomb-heart" aria-hidden="true">❤</span>
+  </div>
+
+  <button
+    id="bomb-close"
+    class="bomb-close"
+    type="button"
+    aria-label="Close celebration"
+  >×</button>
+
+</div>
+<script src="script.js"></script>
+</body>
+</html>
